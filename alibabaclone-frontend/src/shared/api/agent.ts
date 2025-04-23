@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { TransportationSearchRequest } from '../models/transportation/transportationSearchRequest';
+import { TransportationSearchResult } from '../models/transportation/transportationSearchResult';
 // import { store } from '../stores/store';
 
 axios.defaults.baseURL = 'https://localhost:7028/api';
@@ -21,12 +22,16 @@ const request = {
     delete: <T>(url: string) => axios.delete<T>(url).then(responseBody)
 }
 
-const transportationSearchRequests = {
-    list: () => request.get<TransportationSearchRequest[]>('/activities'),
-    details: (id: string) => request.get<TransportationSearchRequest>(`/activities/${id}`),
-    create: (transportationSearchRequest: TransportationSearchRequest) => request.post<void>(`/activities`, transportationSearchRequest),
-    update: (transportationSearchRequest: TransportationSearchRequest) => request.put<void>(`/activities/`, transportationSearchRequest),
-    delete: (id: string) => request.delete<void>(`/activities/${id}`)
+// const transportations = {
+//     list: () => request.get<TransportationSearchRequest[]>('/activities'),
+//     details: (id: string) => request.get<TransportationSearchRequest>(`/activities/${id}`),
+//     create: (transportationSearchRequest: TransportationSearchRequest) => request.post<void>(`/activities`, transportationSearchRequest),
+//     update: (transportationSearchRequest: TransportationSearchRequest) => request.put<void>(`/activities/`, transportationSearchRequest),
+//     delete: (id: string) => request.delete<void>(`/activities/${id}`)
+// }
+
+const transportations = {
+    search: (transportationSearchRequest: TransportationSearchRequest) => request.post<TransportationSearchResult[]>(`/search`, transportationSearchRequest)
 }
 
 // const Account = {
@@ -36,7 +41,7 @@ const transportationSearchRequests = {
 // }
 
 const agent = {
-    transportationSearchRequests
+    transportations
 }
 
 export default agent;
