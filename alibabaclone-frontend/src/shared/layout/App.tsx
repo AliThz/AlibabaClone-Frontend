@@ -1,39 +1,64 @@
-import { useState } from 'react'
-import reactLogo from '../../assets/react.svg'
-import viteLogo from '/vite.svg'
-import { Button } from "@/components/ui/button"
-import './App.css'
+import { BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { store } from '../stores/store'
+import NavBar from './NavBar'
+import TransportationSearchBar from '@/features/transportations/TransportationSearchBar'
+import agent from '../api/agent'
+import { useEffect, useState } from 'react'
+import { City } from '../models/city/city'
+import { RootProvider } from 'react-day-picker'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [cities, setCities] = useState<City[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // useEffect(() => {
+  //   setLoading(true);
+  //   agent.cities.list()
+  //     .then(response => {
+  //       console.log('API Response:', response);
+
+  //       // Explicitly type and handle the response
+  //       let citiesArray: City[];
+  //       if (response && typeof response === 'object') {
+  //         if ('data' in response) {
+  //           // If response has a data property
+  //           citiesArray = response.data as City[];
+  //         } else {
+  //           // If cities are in the first property of the object
+  //           const firstValue = Object.values(response)[0];
+  //           citiesArray = Array.isArray(firstValue) ? firstValue as City[] : [];
+  //         }
+  //       } else {
+  //         citiesArray = [];
+  //       }
+
+  //       setCities(citiesArray);
+  //       setLoading(false);
+  //     })
+  //     .catch(error => {
+  //       setError(error.message);
+  //       setLoading(false);
+  //     });
+  // }, []);
+
+  // // Debug log
+  // console.log('Current cities state:', cities);
+
+  // if (loading) return <div>Loading cities...</div>;
+  // if (error) return <div>Error: {error}</div>;
+  // if (!Array.isArray(cities)) return <div>Invalid data format</div>;
+  // if (cities.length === 0) return <div>No cities found</div>;
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center min-h-svh">
-        <Button>Click me</Button>
-      </div>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <BrowserRouter>
+        <NavBar />
+        <TransportationSearchBar />
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
 export default App

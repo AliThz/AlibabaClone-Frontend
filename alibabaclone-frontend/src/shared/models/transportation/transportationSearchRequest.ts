@@ -1,7 +1,7 @@
 export interface TransportationSearchRequest {
-    vehicleTypeId?: number;
-    fromCityId?: string;
-    toCityId?: string;
-    satrtDateTime?: Date | string;
-    endtDateTime?: Date | string;
+    vehicleTypeId: number;
+    fromCityId: string | undefined;
+    toCityId: string | undefined;
+    satrtDateTime: Date | string | undefined;
+    endtDateTime?: Date | string | undefined;
 }
